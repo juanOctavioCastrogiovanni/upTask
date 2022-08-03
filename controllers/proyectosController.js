@@ -1,3 +1,5 @@
+ const Proyectos = require('../models/Proyecto')
+ 
  module.exports = {
 
     indexController : (req,res) => {
@@ -12,7 +14,7 @@
         })
     },
    
-    datosFormulario: (req,res) => {
+    datosFormulario: async (req,res) => {
         // validar imput
         const {nombre} = req.body;
 
@@ -27,6 +29,9 @@
                 nombrePagina : "Nuevo Proyecto",
                 errores
             })
+        } else {
+            const proyecto = await Proyectos.create({ nombre });
+            res.redirect('/')
         }
     }
 

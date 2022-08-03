@@ -4,6 +4,14 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 
+// crear conexion
+require('./models/Proyecto')
+
+const db = require("./config/db");
+
+//crea la tabla, siempre y cuando requiera el modelo con la estructura de la misma
+db.sync().then(() => console.log('conectado al servidor')).catch(console.log)
+
 // Donde cargar los archivos estaticos
 app.use(express.static('public'));
 
