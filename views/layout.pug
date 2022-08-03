@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        include partials/header
+    body
+        header.barra
+            h1 UpTask - Administrador de Proyectos
+            a(href="/cerrar-sesion") Cerrar Sesión
+
+        main.contenedor
+            aside.contenedor-proyectos
+                .panel.crear-proyecto
+                    a(href="/nuevoProyecto" class="boton") Nuevo 
+                        span +
+                .panel.lista-proyectos
+                    h2 Proyectos
+                    
+            block contenido
+
+            //- pre= vardump(proyectos)
+        
+        script(src="/dist/bundle.js")
+        
