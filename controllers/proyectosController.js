@@ -108,11 +108,15 @@
     eliminarProyecto: async ( req,res ) => {
         const {urlProyecto} = req.query;
 
-        await Proyectos.destroy( {
+        let resultado = await Proyectos.destroy( {
             where: { 
                 url: urlProyecto
             }
         });
+
+        if( !resultado ) {
+            return next();
+        }
 
         res.status(200).send('Proyecto Eliminado Correctamente');
     }
