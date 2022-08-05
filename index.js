@@ -3,6 +3,7 @@ const router = require('./routes/routes');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
+const helpers = require('./helpers');
 
 // crear conexion
 require('./models/Proyecto')
@@ -20,6 +21,12 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 //habilitar pug
 app.set('view engine', 'pug');
+
+//helper de vardump
+app.use((req,res, next) => {
+    res.locals.vardump = helpers.vardump;
+    next();
+}) 
 
 // carpeta de vistas
 app.set('views', path.join(__dirname, "./views"));

@@ -6,7 +6,11 @@ const proyectosController = require('../controllers/proyectosController');
 
 router.get('/' , proyectosController.indexController);
 router.get('/nuevoProyecto' , proyectosController.nuevoProyecto);
+router.get('/proyectos/:url' , proyectosController.detalleProyecto);
+router.delete('/proyectos/:url', proyectosController.eliminarProyecto );
+router.get('/proyecto/editar/:id' , proyectosController.formularioEditar);
 router.post('/nuevoProyecto' , proyectosController.datosFormulario);
+router.post('/nuevoProyecto/:id' , proyectosController.editarProyecto);
 
 
 module.exports = router;  

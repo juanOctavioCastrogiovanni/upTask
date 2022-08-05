@@ -4,7 +4,8 @@ html(lang="en")
         include partials/header
     body
         header.barra
-            h1 UpTask - Administrador de Proyectos
+            h1
+                a(href="/") UpTask - Administrador de Proyectos
             a(href="/cerrar-sesion") Cerrar Sesión
 
         main.contenedor
@@ -14,10 +15,14 @@ html(lang="en")
                         span +
                 .panel.lista-proyectos
                     h2 Proyectos
-                    
+                    ul#proyectos.proyectos
+                        if(proyectos.length)
+                            each proyecto in proyectos 
+                                li 
+                                    a(href=`/proyectos/${proyecto.url}`)= proyecto.nombre
+                                        
             block contenido
-
             //- pre= vardump(proyectos)
-        
-        script(src="/dist/bundle.js")
+
+        script(src="/js/dist/bundle.js")
         
