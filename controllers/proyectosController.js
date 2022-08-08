@@ -30,7 +30,7 @@ module.exports = {
        const errores = [];
 
        if ( !nombre ){
-           errores.push({'texto': 'Agrega un Nombre al Proyecto'});
+           errores.push({'texto': 'w Nombre al Proyecto'});
        };
 
        if ( errores.length > 0 ) {
