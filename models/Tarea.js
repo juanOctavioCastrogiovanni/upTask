@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../config/db');
+const Proyectos = require('./Proyecto');
 
 const Tarea = db.define('tareas', {
     id: {
@@ -10,5 +11,7 @@ const Tarea = db.define('tareas', {
     tareas: Sequelize.STRING(100),
     estado: Sequelize.INTEGER(1)
 })
+
+Tarea.belongsTo(Proyectos);
 
 module.exports = Tarea;

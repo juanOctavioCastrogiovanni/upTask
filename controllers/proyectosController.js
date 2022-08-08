@@ -1,124 +1,132 @@
- const Proyectos = require('../models/Proyecto')
+const Proyectos = require('../models/Proyecto')
+const Tareas = require('../models/Tarea')
  
- module.exports = {
+module.exports = {
 
-    indexController : async (req,res) => {
-        const proyectos = await Proyectos.findAll();
-        
-        // res.send(proyectos)
-        
-        res.render('index', {
-            nombrePagina: "Proyectos",
-            proyectos
-        })
-    },
+   indexController : async (req,res) => {
+       const proyectos = await Proyectos.findAll();
+       
+       // res.send(proyectos)
+       
+       res.render('index', {
+           nombrePagina: "Proyectos",
+           proyectos
+       })
+   },
+   
+   nuevoProyecto: async (req,res) => {
+       const proyectos = await Proyectos.findAll();
+       res.render('nuevoProyecto', {
+           nombrePagina: "Nuevo Proyecto",
+           proyectos
+       })
+   },
+   
+   datosFormulario: async (req,res) => {
+       const proyectos = await Proyectos.findAll();
+       // validar imput
+       const {nombre} = req.body;
+
+       const errores = [];
+
+       if ( !nombre ){
+           errores.push({'texto': 'Agrega un Nombre al Proyecto'});
+       };
+
+       if ( errores.length > 0 ) {
+           res.render("nuevoProyecto",{
+               nombrePagina : "Nuevo Proyecto",
+               errores,
+               proyectos
+           })
+       } else {
+           await Proyectos.create({ nombre });
+           res.redirect('/')
+       }
+   },
     
-    nuevoProyecto: async (req,res) => {
-        const proyectos = await Proyectos.findAll();
-        res.render('nuevoProyecto', {
-            nombrePagina: "Nuevo Proyecto",
-            proyectos
-        })
-    },
-    
-    datosFormulario: async (req,res) => {
-        const proyectos = await Proyectos.findAll();
-        // validar imput
-        const {nombre} = req.body;
+   detalleProyecto: async ( req,res ) => {
+       const proyectosPromise = Proyectos.findAll();
+       const proyectoPromise  = Proyectos.findOne({
+           where: {
+               url: req.params.url
+           }
+       });
 
-        const errores = [];
+       const [ proyecto, proyectos ] = await Promise.all([proyectoPromise, proyectosPromise]);
 
-        if ( !nombre ){
-            errores.push({'texto': 'Agrega un Nombre al Proyecto'});
-        };
-
-        if ( errores.length > 0 ) {
-            res.render("nuevoProyecto",{
-                nombrePagina : "Nuevo Proyecto",
-                errores,
-                proyectos
-            })
-        } else {
-            await Proyectos.create({ nombre });
-            res.redirect('/')
-        }
-    },
-     
-    detalleProyecto: async ( req,res ) => {
-        const proyectosPromise = Proyectos.findAll();
-        const proyectoPromise  = Proyectos.findOne({
+       const tareas = await Tareas.findAll({
             where: {
-                url: req.params.url
+                proyectoId: proyecto.id
             }
-        });
+       })
 
-        const [ proyecto, proyectos ] = await Promise.all([proyectoPromise, proyectosPromise]);
+       res.render('tarea', {
+           nombrePagina: "Detalle del proyecto",
+           proyecto,
+           proyectos,
+           tareas
+       })
+   },
+   
+   formularioEditar: async ( req,res ) => {
+       const proyectosPromise = Proyectos.findAll();
+       const proyectoPromise  = Proyectos.findOne({
+           where: {
+               id: req.params.id
+           }
+       });
 
-        res.render('tarea', {
-            nombrePagina: "Detalle del proyecto",
-            proyecto,
-            proyectos
-        })
-    },
-    
-    formularioEditar: async ( req,res ) => {
-        const proyectosPromise = Proyectos.findAll();
-        const proyectoPromise  = Proyectos.findOne({
-            where: {
-                id: req.params.id
-            }
-        });
+       const [ proyecto, proyectos ] = await Promise.all([proyectoPromise, proyectosPromise]);
+       // validar imput
+   
 
-        const [ proyecto, proyectos ] = await Promise.all([proyectoPromise, proyectosPromise]);
-        // validar imput
-    
+           res.render("nuevoProyecto",{
+               nombrePagina : "Editar proyecto",
+               proyectos,
+               proyecto
+           })
+   },
+   editarProyecto: async ( req,res ) => {
+       const proyectos = await Proyectos.findAll();
+       // validar imput
+       const {nombre} = req.body;
 
-            res.render("nuevoProyecto",{
-                nombrePagina : "Editar proyecto",
-                proyectos,
-                proyecto
-            })
-    },
-    editarProyecto: async ( req,res ) => {
-        const proyectos = await Proyectos.findAll();
-        // validar imput
-        const {nombre} = req.body;
+       const errores = [];
 
-        const errores = [];
+       if ( !nombre ){
+           errores.push({'texto': 'Agrega un Nombre al Proyecto'});
+       };
 
-        if ( !nombre ){
-            errores.push({'texto': 'Agrega un Nombre al Proyecto'});
-        };
+       if ( errores.length > 0 ) {
+           res.render("nuevoProyecto",{
+               nombrePagina : "Nuevo Proyecto",
+               errores,
+               proyectos
+           })
+       } else {
+           await Proyectos.update({ nombre }, {
+               where: {
+                   id:req.params.id
+               }
+           });
+           res.redirect('/')
+       }
+   },
+   eliminarProyecto: async ( req,res ) => {
+       const {urlProyecto} = req.query;
 
-        if ( errores.length > 0 ) {
-            res.render("nuevoProyecto",{
-                nombrePagina : "Nuevo Proyecto",
-                errores,
-                proyectos
-            })
-        } else {
-            await Proyectos.update({ nombre }, {
-                where: {
-                    id:req.params.id
-                }
-            });
-            res.redirect('/')
-        }
-    },
-    eliminarProyecto: async ( req,res ) => {
-        const {urlProyecto} = req.query;
+       let resultado = await Proyectos.destroy( {
+           where: { 
+               url: urlProyecto
+           }
+       });
 
-        let resultado = await Proyectos.destroy( {
-            where: { 
-                url: urlProyecto
-            }
-        });
+       if( !resultado ) {
+           return next();
+       }
 
-        if( !resultado ) {
-            return next();
-        }
+       res.status(200).send('Proyecto Eliminado Correctamente');
+   }
 
-        res.status(200).send('Proyecto Eliminado Correctamente');
-    }
-
- }
+}
