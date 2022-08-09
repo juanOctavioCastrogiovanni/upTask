@@ -235,6 +235,15 @@ body.index {
 .completo {
     color: #00B762;
 }
+
+.sortable-ghost{
+    opacity: 0;
+}
+
+.lista-entrada{
+    margin: 20px 0 ;
+}
+
 .alerta {
     padding: .5rem;
     text-align: center;

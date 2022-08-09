@@ -35,6 +35,8 @@
            }
        })
 
+       console.log
+
        let estado = 0;
        if(estado === tarea.estado){
            estado = 1;
