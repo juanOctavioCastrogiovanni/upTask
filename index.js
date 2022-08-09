@@ -8,6 +8,7 @@ const helpers = require('./helpers');
 // crear conexion
 require('./models/Proyecto')
 require('./models/Tarea')
+require('./models/Usuario')
 
 const db = require("./config/db");
 

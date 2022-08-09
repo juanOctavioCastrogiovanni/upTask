@@ -67,6 +67,18 @@
         if(!resultado) return next();
         
         res.status(200).send(cantidad)
+    },
+    cambiarNombre: async(req, res, next) => {
+        const {nombre, id} = req.params;
+        const tarea = await Tareas.findByPk(id)
+        
+        
+        tarea.tareas = nombre;
+        const resultado = await tarea.save();
+
+        if(!resultado) return next();
+
+        res.status(200).send('Nombre modificado');
     }
 
  }

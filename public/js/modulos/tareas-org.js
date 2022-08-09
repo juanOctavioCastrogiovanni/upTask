@@ -2,13 +2,19 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 import {avance} from '../funciones/avance'
 import Sortable from 'sortablejs';
+import {cambiarNombre} from '../funciones/cambiarNombre'
 
 
 const check = document.querySelector(".listado-pendientes");
 const lista = document.querySelector(".listado-pendientes>ul");
+let nombre;
 
-let bandera = false;
+let obj = {
+    booleano: false,
+    id: 0
+};
 
+// let bandera = false
 Sortable.create(lista, {
 	animation: 150,  
     ghostClass: "sortable-ghost",  // Class name for the drop placeholder
@@ -26,47 +32,41 @@ Sortable.create(lista, {
 	}
 });
 
-
-
-
 if(check){
     check.addEventListener('click', elemento => {
         let icono;
         let id;
         
         
-        if(elemento.target.classList.contains("texto-lista")){
+        if(elemento.target.classList.contains("texto-lista") && !obj.bandera){
+            
             let i = document.createElement("input");
             i.setAttribute("placeholder", elemento.target.innerText);
             i.setAttribute("class", "lista-entrada");
             let p = elemento.target;
-            console.log(p, 'p')
             elemento.target.parentElement.insertBefore(i, p);
-            p.remove();
-            
-            let nombre;
-            
-            i.addEventListener('input', (e) => {
-                nombre = e.target.value;
-            });
-            
-            i.parentElement.parentElement.addEventListener('click', (elemento) => {
-                if(!elemento.target.classList.contains("lista-entrada")) {
-                    if(!nombre){
-                        nombre = 'Nombre no definido'
-                    }
-                    let p = document.createElement("p");
-                    p.innerText = nombre;
-                    p.setAttribute("class", "texto-lista");
-                    let i = elemento.target.querySelector('input');
-                    console.log(i, 'i')
-                    elemento.target.insertBefore(p, i);
-                    i.remove()
- 
+            p.remove();         
+            obj.id = i.parentElement.dataset.tarea
+            i.addEventListener('keydown', (el) => {
+                nombre = el.target.value     
+                if(el.key == 'Enter'){
+                    cambiarNombre(obj.id,el,nombre,false,obj)
                 }
-            })
+            });
 
+            if (!nombre){
+                nombre = elemento.target.innerText
+            }
+
+            obj.bandera = true;
+            // console.log(i.parentElement)
         }
+
+        
+        if(elemento.target.classList.contains("tarea")  && obj.bandera && obj.id === elemento.target.dataset.tarea) {
+            cambiarNombre(obj.id,elemento,nombre,true,obj)
+        }
+        
 
 
         if(elemento.target.classList.contains("fa-check-circle")){
@@ -142,3 +142,38 @@ if(check){
 }
 
 export default check;
+
+
+// if(elemento.target.classList.contains("texto-lista")){
+//     let i = document.createElement("input");
+//     i.setAttribute("placeholder", elemento.target.innerText);
+//     i.setAttribute("class", "lista-entrada");
+//     let p = elemento.target;
+//     console.log(p, 'p')
+//     elemento.target.parentElement.insertBefore(i, p);
+//     p.remove();
+    
+//     let nombre;
+//     numero++
+//     i.addEventListener('input', (e) => {
+//         nombre = e.target.value;
+//     });
+//     console.log(numero)
+//     i.parentElement.parentElement.addEventListener('click', (elemento) => {
+//         if(!elemento.target.classList.contains("lista-entrada")) {
+//             if(!nombre){
+//                 nombre = 'Nombre no definido'
+//             }
+//             let p = document.createElement("p");
+//             p.innerText = nombre;
+//             p.setAttribute("class", "texto-lista");
+//             let i = elemento.target.querySelector('input');
+//             console.log(i, 'i')
+//             elemento.target.insertBefore(p, i);
+//             i.remove()
+//             numero++
+//             console.log(numero)
+//         }
+//     })
+
+// }
