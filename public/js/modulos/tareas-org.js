@@ -40,9 +40,32 @@ if(check){
             i.setAttribute("placeholder", elemento.target.innerText);
             i.setAttribute("class", "lista-entrada");
             let p = elemento.target;
+            console.log(p, 'p')
             elemento.target.parentElement.insertBefore(i, p);
             p.remove();
             
+            let nombre;
+            
+            i.addEventListener('input', (e) => {
+                nombre = e.target.value;
+            });
+            
+            i.parentElement.parentElement.addEventListener('click', (elemento) => {
+                if(!elemento.target.classList.contains("lista-entrada")) {
+                    if(!nombre){
+                        nombre = 'Nombre no definido'
+                    }
+                    let p = document.createElement("p");
+                    p.innerText = nombre;
+                    p.setAttribute("class", "texto-lista");
+                    let i = elemento.target.querySelector('input');
+                    console.log(i, 'i')
+                    elemento.target.insertBefore(p, i);
+                    i.remove()
+ 
+                }
+            })
+
         }
 
 
