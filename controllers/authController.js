@@ -1,6 +1,7 @@
 // AuthController.js
 const passport = require('passport');
 
+
 // autenticar el usuario
 exports.autenticarUsuario = passport.authenticate('local', {
     successRedirect: '/', 
@@ -8,6 +9,8 @@ exports.autenticarUsuario = passport.authenticate('local', {
     failureFlash : true,
     badRequestMessage: 'Ambos Campos son Obligatorios'
 });
+
+
 
 // Función para revisar si el usuario esta logueado o no
 exports.usuarioAutenticado = (req, res, next) => {

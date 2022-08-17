@@ -4,59 +4,61 @@ const Tareas = require('../models/Tarea')
 module.exports = {
 
    indexController : async (req,res) => {
-       const proyectos = await Proyectos.findAll();
+        
+       const usuarioId = res.locals.usuario.id
+       const proyectos = await Proyectos.findAll({ where: { usuarioId } });
        
        // res.send(proyectos)
        
        res.render('index', {
            nombrePagina: "Proyectos",
            proyectos
-       })
-   },
-   
-   nuevoProyecto: async (req,res) => {
-       const proyectos = await Proyectos.findAll();
+        })
+    },
+    
+    nuevoProyecto: async (req,res) => {
+       const usuarioId = res.locals.usuario.id
+       const proyectos = await Proyectos.findAll({ where: { usuarioId } });
+       
        res.render('nuevoProyecto', {
            nombrePagina: "Nuevo Proyecto",
            proyectos
-       })
-   },
-   
-   datosFormulario: async (req,res) => {
-       const proyectos = await Proyectos.findAll();
+        })
+    },
+    
+    datosFormulario: async (req,res) => {
+       const usuarioId = res.locals.usuario.id
+       const proyectos = await Proyectos.findAll({ where: { usuarioId } });
        // validar imput
        const {nombre} = req.body;
-
+       
        const errores = [];
-
+       
        if ( !nombre ){
            errores.push({'texto': 'w Nombre al Proyecto'});
-       };
-
+        };
+        
        if ( errores.length > 0 ) {
            res.render("nuevoProyecto",{
                nombrePagina : "Nuevo Proyecto",
                errores,
                proyectos
-           })
+            })
        } else {
-           await Proyectos.create({ nombre });
+           await Proyectos.create({ nombre, usuarioId });
            res.redirect('/')
-       }
-   },
+        }
+    },
     
    detalleProyecto: async ( req,res ) => {
-       const proyectosPromise = Proyectos.findAll();
-       const proyectoPromise  = Proyectos.findOne({
-           where: {
-               url: req.params.url
-           }
-       });
-
+       const usuarioId = res.locals.usuario.id
+       const proyectosPromise = Proyectos.findAll({ where: { usuarioId } });
+       const proyectoPromise  = Proyectos.findOne({ where: { url: req.params.url } });
+       
        const [ proyecto, proyectos ] = await Promise.all([proyectoPromise, proyectosPromise]);
 
        const tareas = await Tareas.findAll({
-            where: {
+           where: {
                 proyectoId: proyecto.id
             }
        })
@@ -66,29 +68,27 @@ module.exports = {
            proyecto,
            proyectos,
            tareas
-       })
-   },
+        })
+    },
    
    formularioEditar: async ( req,res ) => {
-       const proyectosPromise = Proyectos.findAll();
-       const proyectoPromise  = Proyectos.findOne({
-           where: {
-               id: req.params.id
-           }
-       });
+       const usuarioId = res.locals.usuario.id
+       const proyectosPromise = Proyectos.findAll({ where: { usuarioId } });
+       const proyectoPromise  = Proyectos.findOne({ where: { id: req.params.id } });
 
        const [ proyecto, proyectos ] = await Promise.all([proyectoPromise, proyectosPromise]);
        // validar imput
-   
+       
 
-           res.render("nuevoProyecto",{
+       res.render("nuevoProyecto",{
                nombrePagina : "Editar proyecto",
                proyectos,
                proyecto
            })
    },
    editarProyecto: async ( req,res ) => {
-       const proyectos = await Proyectos.findAll();
+       const usuarioId = res.locals.usuario.id
+       const proyectos = await Proyectos.findAll({ where: { usuarioId } });
        // validar imput
        const {nombre} = req.body;
 
