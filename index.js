@@ -10,7 +10,8 @@ const expressValidator = require('express-validator');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const flash = require('connect-flash');
-const passport = require('./config/passport')
+const passport = require('./config/passport');
+const enviarCorreo = require('./handlers/email');
 // crear conexion
 require('./models/Proyecto')
 require('./models/Tarea')

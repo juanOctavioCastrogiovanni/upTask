@@ -2,6 +2,7 @@ const Usuarios = require('../models/Usuario');
 const crypto = require('crypto')
 const { Op } = require("sequelize");
 const bcrypt = require('bcrypt-nodejs');
+const enviarCorreo = require('../handlers/email')
 
 module.exports = {
     formCrearCuenta: (req, res) => {
@@ -59,9 +60,16 @@ module.exports = {
             
             await usuario.save();
             
-            const url = `http://${req.header.host}/verificarUsuario/${usuario.token}`;
+            const url = `http://${req.headers.host}/verificarUsuario/${usuario.token}`;
 
             //enviar por correo
+            enviarCorreo.enviar({
+                usuario,
+                subject: 'Reestablesca el password',
+                resetUrl: url,
+                archivo: 'reestablecer-password'
+            }).then(console.log)
+            
 
             req.flash('correcto', 'Se ha enviado el email correctamente, confirme en su casilla de correo');
             res.redirect('/reestablecer')
