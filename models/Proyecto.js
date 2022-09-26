@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/db');
 const slug = require('slug');
-const shortid = require('shortId');
+const shortid = require('shortid');
 
 const Proyectos = db.define('proyectos', {
     id: {
@@ -10,12 +10,14 @@ const Proyectos = db.define('proyectos', {
         autoIncrement: true
     },
     nombre: Sequelize.STRING(100),
-    url: Sequelize.STRING(100)
+    url: Sequelize.STRING(100),
+    estado: Sequelize.INTEGER(1)
 }, {
     hooks: {
         beforeCreate( proyecto ) {
             const url = slug(proyecto.nombre).toLowerCase();
-            proyecto.url = `${url}-${shortid.generate().toLowerCase()}`
+            proyecto.url = `${url}-${shortid.generate()}`
+            proyecto.estado = 0;
         }
     }
 })

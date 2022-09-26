@@ -4,33 +4,34 @@ const { Op } = require("sequelize");
 const bcrypt = require('bcrypt-nodejs');
 const enviarCorreo = require('../handlers/email')
 
+require('dotenv').config({path:'variables.env'})
+
 module.exports = {
     formCrearCuenta: (req, res) => {
+
         res.render('crearCuenta', {
             nombrePagina : "Crear cuenta"
         })
     },
-    formIniciarSesion: (req, res) => {
+    formIniciarSesion: async(req, res) => {
+        // let {nombre} = await Usuarios.findOne({where:{id:res.locals.usuario.id}})
+        
         res.render('iniciarSesion', {
-            nombrePagina : "Iniciar sesion en Uptask"
+            nombrePagina : "Iniciar sesion en Uptask",
+            // nombre
         })
     },
     crearCuenta: async (req, res) => {
         // leer los datos
-    const { email, password} = req.body;
+    const { email, password, rePassword} = req.body;
+    const expiracion = Date.now() + 3600000;
+    const token = crypto.randomBytes(20).toString('hex');
+    let usuario;
+    
+    
 
-        try {
-            // crear el usuario
-            await Usuarios.create({
-                email, 
-                password
-            });
-
-            res.redirect('/')
-            // crear una URL de confirmar
-            
-        } catch (error) {
-            req.flash('error', error.errors.map(error => error.message));
+        if(rePassword != password){
+            req.flash('error', ['La contraseña no son iguales']);
             // console.log(req.flash(), 'mensaje de flash')
 
             res.render('crearCuenta', {
@@ -39,6 +40,60 @@ module.exports = {
                 email,
                 password
             })
+        }
+        
+
+        try {
+            // crear el usuario
+         usuario = await Usuarios.create({
+                            email, 
+                            password,
+                            expiracion,
+                            token,
+                            activacion: 0
+                        });
+            
+        } catch (error) {
+ 
+            console.log('error de creacion')
+            if(error.errors){
+                req.flash('error', error.errors.map(error => error.message));
+            } else {
+                req.flash('error', 'Problemas de conexion con la base de datos, por favor comuniquese con su administrador');
+            }
+            
+            // console.log(req.flash(), 'mensaje de flash')
+
+            res.render('crearCuenta', {
+                mensajes: req.flash(),
+                nombrePagina : 'Crear Cuenta en Uptask', 
+                email,
+                password
+            })
+        }
+
+        if(usuario) {
+            const url = `http://${req.headers.host}/verificarUsuario/${token}`;
+
+            //enviar por correo
+            enviarCorreo.enviar({
+               usuario,
+               subject: 'Activa tu cuenta',
+               confirmarUrl: url,
+               archivo: 'confirmar-cuenta'
+           }).then(console.log)
+
+           req.flash('correcto', 'Exito, se ha enviado un correo electronico para activar la cuenta');
+           // console.log(req.flash(), 'mensaje de flash')
+
+           res.render('iniciarSesion', {
+               mensajes: req.flash(),
+               nombrePagina : 'Crear Cuenta en Uptask', 
+               email,
+               password
+           })
+           // crear una URL de confirmar
+
         }
     },
 
@@ -84,15 +139,24 @@ module.exports = {
             req.flash('error', 'El tiempo de expiración se ha cumplido');
             res.redirect('/reestablecer')
         } else {
-            res.render('resetPassword', {
-                nombrePagina: 'Reestablecer contraseña',
-            })
+            if(!usuario.activacion){
+                    usuario.token = null;
+                    usuario.expiracion = null;
+                    usuario.activacion = 1;
+        
+                    await usuario.save();
+                    req.flash('correcto', 'Tu cuenta ha sido activada');
+                    res.redirect('/iniciar-sesion');
+            }else {
+                res.render('resetPassword', {
+                    nombrePagina: 'Reestablecer contraseña',
+                })
+            }
         }
     },
     activarCuenta: async (req, res) => {
         const {token} = req.params
-        const {password} = req.body; 
-        const {rePassword} = req.body; 
+        const {password, rePassword} = req.body; 
         if(password != rePassword){
             req.flash('error', 'Las contraseñas no son iguales')
             res.render('resetPassword', {

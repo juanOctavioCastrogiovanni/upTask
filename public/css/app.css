@@ -45,10 +45,15 @@ body {
     padding: 3rem;
 }
 .campo {
-    display: flex;
+    /* display: flex; */
     margin-bottom: 1rem;
     align-items: center;
 }
+
+.campo-is {
+    display: flex;
+}
+
 .campo label {
     flex: 0 0 100px;
     text-align: right;
@@ -64,6 +69,7 @@ body {
     border-radius: 5rem;
     padding-left: 2rem;
     color: black;
+    width: 70%;
 }
 .campo.acciones {
     justify-content: space-between;
@@ -72,7 +78,8 @@ body {
    justify-content: flex-end;
 }
 .boton {
-    background-color: #FDD835;
+    /* background-color: #FDD835 ; */
+    background-color: #FDD835 ;
     text-align: center;
     transition: background-color .5s ease-in-out;
     padding: 2rem;
@@ -81,6 +88,7 @@ body {
     font-weight: 900;
     width: 250px;
     margin:0  auto;
+    font-size: 10px !important;
 
     display: flex;
     align-items: center;
@@ -111,7 +119,7 @@ body.index {
     height: 100vh;
 }
 .barra {
-    background-color: #455A64;
+    background-color: #243036;
     padding: 1rem;
     height: 60px;
     display: flex;
@@ -128,12 +136,89 @@ body.index {
     text-decoration: none;
 }
 /*** sidebar**/
-.contenedor-proyectos {
-    height: 100%;
-    max-width: 300px;
-    background-color: #607D8B;
-    padding-top: 1rem;
+@media (min-width:762px){
+    .contenedor-proyectos {
+        height: 100%;
+        max-width: 300px;
+        background-color: #354750;
+        padding-top: 1rem;
+    }
+    .contenedor-proyectos-sm {
+        display: none;
+    }
+    
 }
+/* #243036 */
+@media (max-width:761px){
+    .contenedor-proyectos {
+        display: none;
+    }
+    .contenedor-proyectos-sm {
+        background-color: #354750;
+    }
+    
+    ul.navbar-nav > li > a{
+        color: white !important;
+    }
+    .crear-proyecto i {
+        margin: 0
+    }
+
+    .boton-sm {
+        background-color: #FDD835;
+        transition: background-color .5s ease-in-out;
+        padding: 2rem;
+        text-transform: uppercase;
+        border: none;
+        font-weight: 900;
+        width: 130px;
+        margin:0 ;
+    
+        display: flex;
+        align-items: flex-start;
+        line-height: 0;
+    }
+}
+
+.estadistica{
+    width: 50%;
+}
+
+@media (max-width:761px){
+    .estadistica{
+        width: 100%;
+    }  
+}
+@media (min-width:762px){
+    .estadistica{
+        width: 500px;
+    }  
+}
+
+.nav-link{
+    text-decoration: none;
+}
+
+.nav-item.active a strong{
+    color: #FDD835; 
+}
+
+.tamanio{
+    font-size: 18px !important;
+    width: 158px;
+}
+
+.nav-link{
+    color: white !important
+}
+
+.navbar-nav{
+    padding: 3px 0;
+}    
+.navbar-nav > li{
+    padding: 5px 0;
+}
+
 .panel {
     padding: 1rem;
     margin: 1rem;
@@ -196,7 +281,7 @@ body.index {
 .agregar-tarea {
     max-width: 800px;
     width: 90%;
-    background-color: #607D8B;
+    background-color: #354750;
     margin: 0 auto;
     padding: 2rem;
     color: white;
@@ -230,7 +315,7 @@ body.index {
     cursor: pointer;
 }
 .acciones i:last-child{
-    margin-left: 3rem;
+    margin-left: 1rem;
 }
 .completo {
     color: #00B762;
@@ -242,6 +327,7 @@ body.index {
 
 .lista-entrada{
     margin: 20px 0 ;
+    width: 50%;
 }
 
 .alerta {
@@ -290,7 +376,7 @@ body.index {
 form.agregar-proyecto {
     max-width: 800px;
     width: 90%;
-    background-color: #607D8B;
+    background-color: #354750;
     margin: 0 auto;
     padding: 2rem;
     color: white;
@@ -317,7 +403,7 @@ form input[type="submit"]{
     margin-top: 1rem;
     text-align: center;
     display: block;
-    padding: 1.5rem;
+    padding: 1rem;
     color: black;
     width: auto;
     margin: 0;
@@ -343,3 +429,36 @@ form input[type="submit"]{
     text-align: center;
     display: block;
 }
+
+.tarea .acciones{
+    display: flex;
+}
+
+/* preload */
+
+.load{position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);
+    /*change these sizes to fit into your project*/
+    width:100px;
+    height:100px;
+  }
+  .load hr{border:0;margin:0;width:20%;height:20%;position:absolute;border-radius:50%;animation:spin 2s ease infinite}
+  
+  .load :first-child{background:#19A68C;animation-delay:-1.5s}
+  .load :nth-child(2){background:#F63D3A;animation-delay:-1s}
+  .load :nth-child(3){background:#FDA543;animation-delay:-0.5s}
+  .load :last-child{background:#193B48}
+  
+  @keyframes spin{
+    0%,100%{transform:translate(0)}
+    25%{transform:translate(160%)}
+    50%{transform:translate(160%, 160%)}
+    75%{transform:translate(0, 160%)}
+  }
+
+  .none{
+    display: none;
+  }
+
+  .preloader{
+    opacity: .7;
+  }

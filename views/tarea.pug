@@ -7,7 +7,7 @@ block contenido
         form.agregar-tarea(action=`/proyectos/tarea/${proyecto.url}` method="POST")
             .campo
                label(for="tarea") Tarea:
-               input.nombre-tarea(type="text" name="tarea" placeholder="Nombre Tarea")
+               input.nombre-tarea(type="text" name="tarea" placeholder="Nombre" required)
             .campo.enviar
                 input.boton.nueva-tarea(type="submit" value="Agregar") 
 
@@ -24,10 +24,10 @@ block contenido
                                 i.far.fa-check-circle.completo
                             else 
                                 i.far.fa-check-circle
-                            i.fas.fa-trash  
+                            i.fas.fa-trash 
               else 
                 p No hay tareas en este proyecto  
-
+            i.fas.fa-list-ul
 
 
         //- pre= vardump(tareas)
@@ -43,4 +43,4 @@ block contenido
         .contenedor-acciones
             a(href=`/proyecto/editar/${proyecto.id}` class="boton") Editar 
             button#eliminar-proyecto(data-proyecto-url=proyecto.url type="button" class="boton eliminar") Eliminar 
-
+        

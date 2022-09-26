@@ -16,7 +16,8 @@ passport.use(
             try {
                 const usuario = await Usuarios.findOne({
                     where: { 
-                        email
+                        email,
+                        activacion: 1
                     }
                 });
        

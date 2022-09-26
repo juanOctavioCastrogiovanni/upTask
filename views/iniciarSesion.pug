@@ -14,14 +14,14 @@ html(lang="en")
                                 p= error
 
             form#formulario.caja.caja-login(method="POST" action="/iniciar-sesion")
-                .campo
-                    label(for="email") E-mail:
+                .campo.campo-is
+                    //- label(for="email") E-mail:
                     input(type="text" name="email" placeholder="Tu Email" )
-                .campo
-                    label(for="password") Password:
+                .campo.campo-is
+                    //- label(for="password") Password:
                     input(type="password" name="password" placeholder="Tu Password" )
-                .campo.enviar
+                .campo.enviar.campo-is
                     input.boton(type="submit" value="Iniciar Sesión")
-                .campo.acciones
-                    a(href="/crear-cuenta") ¿Aún no tienes cuenta? Crea una gratis
-                    a(href="/reestablecer") ¿Olvidaste tu Contraseña?
+                .campo.acciones.campo-is
+                    a(href="/crear-cuenta") Crea una gratis
+                    a(href="/reestablecer") Restaurar contraseña

@@ -6,12 +6,14 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 const helpers = require('./helpers');
-const expressValidator = require('express-validator');
+// const expressValidator = require('express-validator');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('./config/passport');
-const enviarCorreo = require('./handlers/email');
+
+require('dotenv').config({path:'variables.env'})
+
 // crear conexion
 require('./models/Proyecto')
 require('./models/Tarea')
@@ -26,7 +28,7 @@ db.sync().then(() => console.log('conectado al servidor')).catch(console.log)
 app.use(express.static('public'));
 
 // utilizacion de express validator
-app.use(expressValidator());
+// app.use(expressValidator());
 
 //habilitar bodyParser
 app.use(bodyParser.urlencoded({extended: true}));
@@ -61,8 +63,13 @@ app.use((req,res, next) => {
 // carpeta de vistas
 app.set('views', path.join(__dirname, "./views"));
 
-
 app.use('/', router);
 
+const host = process.env.HOST || '0.0.0.0';
+const port = process.env.PORT || 3000;
 
-app.listen(3000, () => console.log("corriendo express"));
+console.log(host)
+
+app.listen(port, () => {
+    console.log('El servidor esta funcionando');
+})

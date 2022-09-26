@@ -3,26 +3,58 @@ html(lang="en")
     head
         include partials/header
     body
+        div#preloader.none
+            hr
+            hr
+            hr
+            hr
         header.barra
             h1
-                a(href="/") UpTask - Administrador de Proyectos
+                a(href="/") UpTask 
             a(href="/cerrar-sesion") Cerrar Sesión
 
+        nav.navbar.navbar-expand-lg.navbar-light.contenedor-proyectos-sm
+            .crear-proyecto
+                a(href="/nuevoProyecto" class="boton-sm") Nuevo
+            button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation')
+                span.navbar-toggler-icon
+            #navbarNav.collapse.navbar-collapse
+                ul.navbar-nav
+                    li.nav-item.active
+                        a.nav-link(href='#')
+                            strong Proyectos
+                    if(proyectos.length)        
+                        each proyecto in proyectos 
+                            li(class=proyecto.url) 
+                                if(proyecto.estado)
+                                    del
+                                        a(href=`/proyectos/${proyecto.url}` style="color:rgb(196,196,196)")= proyecto.nombre
+                                else
+                                    a(href=`/proyectos/${proyecto.url}`)= proyecto.nombre
+                    else 
+                        li 
+                            a(class="nav-link" href='/') No tienes proyectos               
         main.contenedor
             aside.contenedor-proyectos
                 .panel.crear-proyecto
-                    a(href="/nuevoProyecto" class="boton") Nuevo 
+                    a(href="/nuevoProyecto" class="boton tamanio") Nuevo 
                         span +
                 .panel.lista-proyectos
                     h2 Proyectos
                     ul#proyectos.proyectos
                         if(proyectos.length)
                             each proyecto in proyectos 
-                                li 
-                                    a(href=`/proyectos/${proyecto.url}`)= proyecto.nombre
-                                        
+                                li(class=proyecto.url) 
+                                    if(proyecto.estado)
+                                        del
+                                            a(href=`/proyectos/${proyecto.url}` style="color:rgb(196,196,196)")= proyecto.nombre
+                                    else
+                                        a(href=`/proyectos/${proyecto.url}`)= proyecto.nombre
+                        else 
+                            li 
+                                a(href='/') No tienes proyectos
             block contenido
             //- pre= vardump(proyectos)
-
+        script(src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous")
+        script(src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous")
         script(src="/js/dist/bundle.js")
-        

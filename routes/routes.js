@@ -16,6 +16,7 @@ router.get('/proyecto/editar/:id' , authController.usuarioAutenticado, proyectos
 router.post('/proyectos/tarea/:url', authController.usuarioAutenticado, tareasController.agregarTarea );
 router.patch('/proyectos/tarea/estado/:id', authController.usuarioAutenticado, tareasController.cambiarEstado);
 router.patch('/proyectos/tarea/nombre/:id/:nombre', authController.usuarioAutenticado, tareasController.cambiarNombre);
+router.patch('/proyectos/estado/:url/:estado', authController.usuarioAutenticado, proyectosController.cambiarEstado);
 router.post('/nuevoProyecto' , authController.usuarioAutenticado, proyectosController.datosFormulario);
 router.post('/nuevoProyecto/:id' , authController.usuarioAutenticado, proyectosController.editarProyecto);
 

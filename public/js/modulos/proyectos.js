@@ -6,6 +6,8 @@ import Swal from 'sweetalert2';
 
 const btnEliminar = document.querySelector('#eliminar-proyecto');
 
+
+
 if (btnEliminar) {
     btnEliminar.addEventListener('click', (event) => {
        const urlProyecto = event.target.dataset.proyectoUrl;
@@ -33,12 +35,9 @@ if (btnEliminar) {
                'Borrado!',
                respuesta.data,
                'Exitoso'
-               )
-          
-
-         setTimeout(() => {
-             window.location.href = '/';
-         }, 3000)
+            ).then(() => {
+                window.location.href = '/';
+            })
        })
        .catch(() => {
            Swal.fire({

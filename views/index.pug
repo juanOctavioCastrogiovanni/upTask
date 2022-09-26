@@ -1,5 +1,20 @@
 extends layout 
-
+                
 block contenido 
-    div(class="contenido-principal")
-        h1= nombrePagina
+   div(class="contenido-principal")
+        if(!proyectos.length)
+            .alert.alert-danger.alert-dismissible.fade.show(role='alert')
+                strong ¡No tienes proyecto aun!
+                |  Hemos visto que aun no tienes proyectos cargados, para continuar crea proyectos y sigue las instrucciones.  
+                button.close(type='button' data-dismiss='alert' aria-label='Close')
+                    span(aria-hidden='true') &times;
+        .alert.alert-success(role='alert')
+            h4.alert-heading ¡Bienvenido!
+            h6
+                | Si aun no tienes proyectos puedes crear uno en la sección de Proyectos, en el botón Nuevo+. Recuerda que puedes crear cuantos proyectos necesites sin restricciones. 
+            hr
+            h6.mb-0
+                 | Si tienes uno o mas proyectos podras verlos en la sección de Proyectos.
+        if(proyectos.length)         
+            div.estadistica
+                canvas#myChart #{proyectosTotales}-#{cantProyectosIncompletos}-#{cantProyectosCompletos}
