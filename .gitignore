@@ -73,7 +73,7 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
+variables.env
 .env.test
 
 # parcel-bundler cache (https://parceljs.org/)
@@ -84,7 +84,7 @@ typings/
 
 # Nuxt.js build / generate output
 .nuxt
-dist
+
 
 # Gatsby files
 .cache/
@@ -110,4 +110,4 @@ dist
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
-# End of https://www.toptal.com/developers/gitignore/api/node
+# End of https://www.toptal.com/developers/gitignore/api/nodesendgrid.env
