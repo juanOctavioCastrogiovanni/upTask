@@ -10,7 +10,7 @@ const authController = require('../controllers/authController');
 router.get('/' ,authController.usuarioAutenticado, proyectosController.indexController);
 router.get('/nuevoProyecto' , authController.usuarioAutenticado, proyectosController.nuevoProyecto);
 router.get('/proyectos/:url' , authController.usuarioAutenticado, proyectosController.detalleProyecto);
-router.delete('/proyectos/:url', authController.usuarioAutenticado, proyectosController.eliminarProyecto);
+router.delete('/proyectos/:id', authController.usuarioAutenticado, proyectosController.eliminarProyecto);
 router.delete('/proyectos/tarea/borrar/:id', authController.usuarioAutenticado, tareasController.eliminarTarea);
 router.get('/proyecto/editar/:id' , authController.usuarioAutenticado, proyectosController.formularioEditar);
 router.post('/proyectos/tarea/:url', authController.usuarioAutenticado, tareasController.agregarTarea );

@@ -139,17 +139,16 @@ module.exports = {
        }
    },
    eliminarProyecto: async ( req,res,next ) => {
-       const {urlProyecto} = req.query;
+       const {id} = req.query;
 
-       let resultado = await Proyectos.destroy( {
-           where: { 
-               url: urlProyecto
-           }
-       });
-
-       if( !resultado ) {
-           return next();
-       }
+        // Borro todas las tareas asociadas a ese proyecto
+        const borrarTareas = await Tareas.destroy( {where: {proyectoId: id}} );
+        
+        // Borro el proyecto finalmente
+        const borrarProyecto = await Proyectos.destroy( {where: {id}} );
+        
+        // Si alguno de los 2 no se borro entonces no responde la peticion con status 200
+       if( !borrarTareas || !borrarProyecto ) { return next(); }
 
        res.status(200).send('Proyecto eliminado correctamente');
    },
@@ -166,5 +165,4 @@ module.exports = {
 
        res.status(200).send('se cambio el estado del proyecto');
    }
-
 }

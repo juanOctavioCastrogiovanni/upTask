@@ -27,6 +27,7 @@ passport.use(
                         message : 'Password Incorrecto'
                     })
                 } 
+
                 // El email existe, y el password correcto
                 return done(null, usuario);
             } catch (error) {
@@ -49,6 +50,7 @@ passport.serializeUser((usuario, callback) => {
 passport.deserializeUser((usuario, callback) => {
     callback(null, usuario);
 });
+
 
 // exportar
 module.exports = passport;

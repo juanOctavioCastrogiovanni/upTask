@@ -36,7 +36,8 @@ const Usuario = db.define('usuarios', {
    },
    token: Sequelize.STRING,
    expiracion: Sequelize.DATE,
-   activacion: Sequelize.BOOLEAN
+   activacion: Sequelize.BOOLEAN,
+   prueba: Sequelize.INTEGER
 }, {
     hooks: {
         beforeCreate( usuario ) {
