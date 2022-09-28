@@ -47,7 +47,7 @@ body {
 .campo {
     /* display: flex; */
     margin-bottom: 1rem;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .campo-is {
@@ -314,9 +314,9 @@ body.index {
 .listado-pendientes ul li i {
     cursor: pointer;
 }
-.acciones i:last-child{
+/* .acciones i:last-child{
     margin-left: 1rem;
-}
+} */
 .completo {
     color: #00B762;
 }

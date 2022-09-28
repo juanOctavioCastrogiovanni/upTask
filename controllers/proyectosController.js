@@ -1,5 +1,6 @@
 const Proyectos = require('../models/Proyecto')
 const Tareas = require('../models/Tarea')
+const purgar = require('../funciones/purgarUsuario')
 
 
 module.exports = {
@@ -26,7 +27,8 @@ module.exports = {
        
     //    const [proyectos,proyectosIncompletos] = await Promise.all([proyecto,proyectoIncompletos])
         
-        const usuarioId = res.locals.usuario.id
+        const usuarioId = res.locals.usuario.id;
+        purgar(usuarioId);
         const proyectos = await Proyectos.findAll({ where: { usuarioId } });
         const incompletos = proyectos.filter((proyecto) => proyecto.estado == 0)
         const completos = proyectos.filter((proyecto) => proyecto.estado == 1)

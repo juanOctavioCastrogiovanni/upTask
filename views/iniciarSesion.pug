@@ -6,7 +6,7 @@ html(lang="en")
         .contenedor-formulario
             div.d-flex.justify-content-center.align-items-center
                 h1.d-inline Iniciar Sesión en UpTask
-                p.d-inline.mx-1 V1.3
+                p.d-inline.mx-1 V1.4
             
             if locals.mensajes
                 .alertas
@@ -22,8 +22,18 @@ html(lang="en")
                 .campo.campo-is
                     //- label(for="password") Password:
                     input(type="password" name="password" placeholder="Tu Password" )
-                .campo.enviar.campo-is
-                    input.boton(type="submit" value="Iniciar Sesión")
+                
+                .campo.acciones.campo-is
+                    div.d-flex 
+                        a(href="https://github.com/juanOctavioCastrogiovanni/upTask" target="_blank" data-hover="Hello, this is the tooltip")
+                            button.btn.btn-dark(type='button') 
+                                i.fab.fa-github      
+                                
+                        a(href="https://www.juanoctaviocastrogiovanni.com.ar/" target="_blank" alt="Hello, this is the tooltip")
+                            button.btn.btn-info.mx-1(type='button') 
+                                i.fas.fa-user-tie      
+                    .campo.enviar.campo-is
+                        input.boton(type="submit" value="Iniciar Sesión")
                 .campo.acciones.campo-is
                     a(href="/crear-cuenta") Crea una gratis
                     a(href="/reestablecer") Restaurar contraseña

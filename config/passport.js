@@ -27,6 +27,8 @@ passport.use(
                         message : 'Password Incorrecto'
                     })
                 } 
+                
+                // usuario.limpiar()
 
                 // El email existe, y el password correcto
                 return done(null, usuario);
