@@ -4,9 +4,9 @@ html(lang="en")
         include partials/header
     body.login
         .contenedor-formulario
-            div.d-flex.justify-content-center.align-items-center
+            div.d-flex.justify-content-center.align-items-center.flex-wrap
                 h1.d-inline Iniciar Sesión en UpTask
-                p.d-inline.mx-1 V1.4
+                p.d-inline.mx-1 V1.5
             
             if locals.mensajes
                 .alertas
@@ -16,15 +16,20 @@ html(lang="en")
                                 p= error
 
             form#formulario.caja.caja-login(method="POST" action="/iniciar-sesion")
+                .d-flex.boton-prueba.justify-content-center.align-items-center
+                    button.btn.btn-danger(type='button' id='usuarioPrueba') 
+                        i.fas.fa-user
+                    p.align-items-center Usuario de prueba
+                                  
                 .campo.campo-is
                     //- label(for="email") E-mail:
-                    input(type="text" name="email" placeholder="Tu Email" )
+                    input(id="emailInput" type="text" name="email" placeholder="Tu Email" )
                 .campo.campo-is
                     //- label(for="password") Password:
-                    input(type="password" name="password" placeholder="Tu Password" )
+                    input(id="passwordInput" type="password" name="password" placeholder="Tu Password" )
                 
-                .campo.acciones.campo-is
-                    div.d-flex 
+                .campo.acciones.campo-is.flex-wrap
+                    div.d-flex
                         a(href="https://github.com/juanOctavioCastrogiovanni/upTask" target="_blank" data-hover="Hello, this is the tooltip")
                             button.btn.btn-dark(type='button') 
                                 i.fab.fa-github      
@@ -32,8 +37,11 @@ html(lang="en")
                         a(href="https://www.juanoctaviocastrogiovanni.com.ar/" target="_blank" alt="Hello, this is the tooltip")
                             button.btn.btn-info.mx-1(type='button') 
                                 i.fas.fa-user-tie      
-                    .campo.enviar.campo-is
+                        
+                       
+                    .campo.enviar.campo-is.my-1
                         input.boton(type="submit" value="Iniciar Sesión")
                 .campo.acciones.campo-is
-                    a(href="/crear-cuenta") Crea una gratis
-                    a(href="/reestablecer") Restaurar contraseña
+                    a(href="/crear-cuenta") Nueva cuenta
+                    a(href="/reestablecer") Contraseña?
+        script(src="/js/dist/bundle.js")

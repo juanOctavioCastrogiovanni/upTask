@@ -2,6 +2,12 @@ extends layout
 
 block contenido
     .contenido-principal
+        if(usuarioId === 2)
+           .alert.alert-warning(role='alert')
+                strong ¡USUARIO DE PRUEBA!
+                |  Ten en cuanta que este usuario borrara todos los proyectos creados en esta sesion. Puedes crear proyectos y probar las funcionalidades. 
+                strong 
+                    a.alert-warning(href="/crear-cuenta" ) ¡Crea una cuenta gratis!
         h1 #{nombrePagina} - #{proyecto.nombre}
 
         form.agregar-tarea(action=`/proyectos/tarea/${proyecto.url}` method="POST")

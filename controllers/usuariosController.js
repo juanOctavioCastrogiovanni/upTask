@@ -22,6 +22,10 @@ module.exports = {
         })
     },
     crearCuenta: async (req, res) => {
+    req.session.destroy(() => {
+        res.redirect('/iniciar-sesion'); // al cerrar sesión nos lleva al login
+    })
+        
         // leer los datos
     const { email, password, rePassword} = req.body;
     const expiracion = Date.now() + 3600000;

@@ -8,6 +8,13 @@ block contenido
                 |  Hemos visto que aun no tienes proyectos cargados, para continuar crea proyectos y sigue las instrucciones.  
                 button.close(type='button' data-dismiss='alert' aria-label='Close')
                     span(aria-hidden='true') &times;
+        if(usuarioId === 2)
+           .alert.alert-warning(role='alert')
+                strong ¡USUARIO DE PRUEBA!
+                |  Ten en cuanta que este usuario borrara todos los proyectos creados en esta sesion. Puedes crear proyectos y probar las funcionalidades. 
+                strong 
+                    a.alert-warning(href="/crear-cuenta" ) ¡Crea una cuenta gratis!
+
         .alert.alert-success(role='alert')
             h4.alert-heading ¡Bienvenido!
             h6

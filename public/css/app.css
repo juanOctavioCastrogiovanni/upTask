@@ -313,6 +313,7 @@ body.index {
 }
 .listado-pendientes ul li i {
     cursor: pointer;
+    padding: 5px;
 }
 /* .acciones i:last-child{
     margin-left: 1rem;
@@ -461,4 +462,16 @@ form input[type="submit"]{
 
   .preloader{
     opacity: .7;
+  }
+
+  .boton-prueba{
+    margin-top: -29px;
+    margin-bottom: 15px;
+  }
+
+  .boton-prueba p {
+    color: black;
+    margin-bottom: 0px;
+    margin-left: 4px;
+    font-size: 15px;
   }
